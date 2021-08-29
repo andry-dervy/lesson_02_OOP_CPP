@@ -39,9 +39,7 @@ int getRandomNum(int min, int max)
 enum Status
 {
   STATUS_OK,
-  ERROR_NO,
   ERROR_LIM,
-  STACK_EMPTY
 };
 
 enum Gender
