@@ -99,17 +99,22 @@ class Student: public Person
 {
   static int countStudents;
   int yearOfLearning;
-
+  bool isCopy;
 public:
   Student(string aName = "", int aAge = 0, Gender aGender = Gender::MAN,
           double aWeight = 0,int aYearOfLearning = 0)
-      : Person(aName,aAge,aGender,aWeight),yearOfLearning(aYearOfLearning)
+      : Person(aName,aAge,aGender,aWeight),yearOfLearning(aYearOfLearning),isCopy(false)
   {
     Student::countStudents++;
   }
+  Student(const Student &st)
+    : Person(st.getName(),st.getAge(),st.getGender(),st.getWeight()),
+      yearOfLearning(st.getYearOfLearning()),isCopy(true)
+  {}
   ~Student()
   {
-    Student::countStudents--;
+    if(!isCopy)
+      Student::countStudents--;
   }
   Status setYearOfLearning(int aYearOfLearning)
   {
@@ -300,6 +305,43 @@ void task_1()
     }
     lStudents.pop_front();
   }
+
+  //Test 3
+  cout << "\nTest 3" << endl;
+
+  AMOUND = 1;
+
+  Student* st = new Student("Name_1",18,MAN,60,1);
+  st->print();
+
+  Student* copy_st = new Student(*st);
+  copy_st->print();
+
+  if(Student::getCountStudents() == AMOUND)
+  {
+    cout << "CountStudents " << Student::getCountStudents() <<
+            " equals AMOUND " << AMOUND << endl;
+  }
+  else
+  {
+    cout << "CountStudents " << Student::getCountStudents() <<
+            " doesn't equal AMOUND " << AMOUND << endl;
+  }
+
+  delete copy_st;
+
+  if(Student::getCountStudents() == AMOUND)
+  {
+    cout << "CountStudents " << Student::getCountStudents() <<
+            " equals AMOUND " << AMOUND << endl;
+  }
+  else
+  {
+    cout << "CountStudents " << Student::getCountStudents() <<
+            " doesn't equal AMOUND " << AMOUND << endl;
+  }
+
+  delete st;
 
   cout << endl;
 }
